@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <app-header :quote-count="quotes.length" :max-quotes="maxQuotes"></app-header>
     <app-new-quote @quoteAdded="newQuote"></app-new-quote>
     <br>
     <app-quote-grid :quotes="quotes" @quoteDeleted="deleteQuote"></app-quote-grid>
@@ -13,6 +14,7 @@
 </template>
 
 <script>
+import Header from "./components/Header.vue"
 import NewQuote from "./components/NewQuote.vue"
 import QuoteGrid from "./components/QuoteGrid.vue"
 
@@ -27,6 +29,9 @@ export default {
   },
   methods: {
     newQuote(quote) {
+      if (this.quotes.length >= this.maxQuotes) {
+        return alert("Please delete Quotes first!")
+      }
       this.quotes.push(quote);
     },
     deleteQuote(index) {
@@ -35,7 +40,8 @@ export default {
   },
   components: {
     appNewQuote: NewQuote,
-    appQuoteGrid: QuoteGrid
+    appQuoteGrid: QuoteGrid,
+    appHeader: Header
   }
 }
 </script>
